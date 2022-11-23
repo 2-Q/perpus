@@ -40,25 +40,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ([1,2] as $key => $table)
+                                    @foreach ($peminjamans as $key => $peminjaman)
                                     <tr>
                                         <td>{{ $key + 1 }}.</td>
-                                        <td>{{ '200191'.$key }}</td>
-                                        <td>{{ 'Dwiki' }}</td>
+                                        <td>{{ $peminjaman->no }}</td>
+                                        <td>{{ $peminjaman->nama }}</td>
                                         <td>
-                                            <x-btn-crud id="{{ $table }}" />
+                                            <x-btn-crud id="{{ $peminjaman->no }}" />
                                         </td>
                                     </tr>
                                     @endforeach
-                                    <!-- just demo -->
-                                    <tr>
-                                        <td>{{ $key + 2 }}.</td>
-                                        <td>{{ '2001914' }}</td>
-                                        <td>{{ 'Adit' }}</td>
-                                        <td>
-                                            <x-btn-crud id="{{ $table }}" />
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>

@@ -27,7 +27,38 @@
                             <div class="card-title">Detail Peminjaman</div>
                         </div>
                         <div class="card-body">
-                            ---
+                        <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Judul Buku</h5>
+                                    {{ $peminjaman->buku }}
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Category</h5>
+                                    {{ $peminjaman->category }}
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Peminjam</h5>
+                                    {{ $peminjaman->mahasiswa }} ~ {{$peminjaman->nrp}} ~ {{ $peminjaman->prodi }} {{$peminjaman->kelas}} ~ {{$peminjaman->angkatan}}
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Tanggal Pinjam</h5>
+                                    {{ $peminjaman->tgl_pinjam }}
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Tanggal Kembali</h5>
+                                    {{ $peminjaman->tgl_kembali }}
+                                    </div>
+                                </li>
+                            </ol>
                         </div>
                     </div>
                 </div>

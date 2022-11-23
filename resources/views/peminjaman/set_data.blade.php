@@ -26,7 +26,7 @@
                         <div class="card-header">
                             <div class="card-title">Form Peminjaman</div>
                         </div>
-                        <form action="" method="POST" onsubmit="return confirm('Submit data ini?')">
+                        <form action="{{ isset($peminjaman) ? Route('peminjaman.update', $peminjaman->no) : Route('peminjaman.store') }}" method="POST" onsubmit="return confirm('Submit data ini?')">
                             @csrf
                             @isset($peminjaman)
                             @method('PUT')
@@ -34,9 +34,34 @@
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="myName">myLabel</label>
-                                    <input class="form-control" id="myName" name="myName" value="{{ old('myName', $peminjaman->myName ?? null) }}" placeholder="Masukkan myLabel">
-                                    @error('myName')
+                                    <label for="kode_buku">Buku</label>
+                                    <select class="form-control" id="kode_buku" name="kode_buku">
+                                        <option selected>Select Buku</option>
+                                        @foreach($bukus as $buku)
+                                        @isset($peminjaman)
+                                        <option value="{{$buku->kode}}" {{ old('kode_buku', $peminjaman->kode_buku) == $buku->kode ? 'selected' : '' }}>{{$buku->kode}} ~ {{$buku->nama}}</option>
+                                        @else
+                                        <option value="{{$buku->kode}}">{{$buku->kode}} ~ {{$buku->nama}}</option>
+                                        @endisset
+                                        @endforeach
+                                    </select>
+                                    @error('kode_buku')
+                                    <div class="mt-2 text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="nrp_mahasiswa">Peminjam Buku</label>
+                                    <select class="form-control" id="nrp_mahasiswa" name="nrp_mahasiswa">
+                                        <option selected>Select Mahasiswa</option>
+                                        @foreach($mahasiswas as $mahasiswa)
+                                        @isset($peminjaman)
+                                        <option value="{{$mahasiswa->nrp}}" {{ old('nrp_mahasiswa', $peminjaman->nrp_mahasiswa) == $mahasiswa->nrp ? 'selected' : '' }}>{{$mahasiswa->nrp}} ~ {{$mahasiswa->nama}}</option>
+                                        @else
+                                        <option value="{{$mahasiswa->nrp}}">{{$mahasiswa->nrp}} ~ {{$mahasiswa->nama}}</option>
+                                        @endisset
+                                        @endforeach
+                                    </select>
+                                    @error('nrp_mahasiswa')
                                     <div class="mt-2 text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

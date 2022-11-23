@@ -27,7 +27,32 @@
                             <div class="card-title">Detail Buku</div>
                         </div>
                         <div class="card-body">
-                            ---
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Judul Buku</h5>
+                                    {{ $buku->nama }}
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Category</h5>
+                                    {{ $buku->category }}
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Pengarang</h5>
+                                    {{ $buku->pengarang }}
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                    <h5 class="fw-bold">Tahun Terbit</h5>
+                                    {{ $buku->tahun }}
+                                    </div>
+                                </li>
+                            </ol>
                         </div>
                     </div>
                 </div>

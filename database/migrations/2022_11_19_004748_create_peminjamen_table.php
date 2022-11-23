@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('peminjamen', function (Blueprint $table) {
-            $table->id();
+            $table->id('no');
+            $table->unsignedBigInteger('kode_buku');
+            $table->unsignedBigInteger('nrp_mahasiswa');
+            $table->timestamp('tgl_pinjam');
+            $table->timestamp('tgl_kembali');
             $table->timestamps();
         });
     }

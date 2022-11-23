@@ -40,25 +40,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ([1,2] as $key => $table)
+                                    @foreach ($bukus as $key => $buku)
                                     <tr>
                                         <td>{{ $key + 1 }}.</td>
-                                        <td>{{ '191'.$key }}</td>
-                                        <td>{{ 'Dasar Pemrograman PHP' }}</td>
+                                        <td>{{ $buku->kode }}</td>
+                                        <td>{{ $buku->nama }}</td>
                                         <td>
-                                            <x-btn-crud id="{{ $table }}" />
+                                            <x-btn-crud id="{{ $buku->kode }}" />
                                         </td>
                                     </tr>
                                     @endforeach
-                                    <!-- just demo -->
-                                    <tr>
-                                        <td>{{ $key + 2 }}.</td>
-                                        <td>{{ '1914' }}</td>
-                                        <td>{{ 'Pengenalan Lingkungan Frontend' }}</td>
-                                        <td>
-                                            <x-btn-crud id="{{ $table }}" />
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>

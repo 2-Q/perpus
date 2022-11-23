@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
+use App\Models\Mahasiswa;
 use App\Models\Peminjaman;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PeminjamanController extends Controller
 {
@@ -14,7 +18,12 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        return view('peminjaman.index');
+        $peminjamans = DB::select(
+            'select peminjamen.*, mahasiswas.* from peminjamen 
+            join mahasiswas on peminjamen.nrp_mahasiswa = mahasiswas.nrp
+            join bukus on peminjamen.kode_buku = bukus.kode');
+        
+        return view('peminjaman.index', compact('peminjamans'));
     }
 
     /**
@@ -24,7 +33,9 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
-        return view('peminjaman.set_data');
+        $bukus = Buku::all();
+        $mahasiswas = Mahasiswa::all();
+        return view('peminjaman.set_data', compact('bukus', 'mahasiswas'));
     }
 
     /**
@@ -35,7 +46,15 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Peminjaman::create([
+            'no' => time(),
+            'kode_buku' => $request->kode_buku,
+            'nrp_mahasiswa' => $request->nrp_mahasiswa,
+            'tgl_pinjam' => Carbon::now()->toDateTimeString(),
+            'tgl_kembali' => Carbon::now()->subDay(-5)->toDateTimeString(),
+        ]);
+
+        return redirect()->route('peminjaman.index');
     }
 
     /**
@@ -46,7 +65,13 @@ class PeminjamanController extends Controller
      */
     public function show($id)
     {
-        return view('peminjaman.detail');
+        $result = DB::select(
+            'select peminjamen.*, mahasiswas.*, bukus.*, mahasiswas.nama as mahasiswa, bukus.nama as buku from peminjamen 
+            join mahasiswas on peminjamen.nrp_mahasiswa = mahasiswas.nrp
+            join bukus on peminjamen.kode_buku = bukus.kode
+            where peminjamen.no = '. $id);
+        $peminjaman = $result[0];
+        return view('peminjaman.detail', compact('peminjaman'));
     }
 
     /**
@@ -57,7 +82,10 @@ class PeminjamanController extends Controller
      */
     public function edit($id)
     {
-        return view('peminjaman.set_data');
+        $peminjaman = Peminjaman::findOrFail($id);
+        $bukus = Buku::all();
+        $mahasiswas = Mahasiswa::all();
+        return view('peminjaman.set_data', compact('peminjaman', 'bukus', 'mahasiswas'));
     }
 
     /**
@@ -69,7 +97,13 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman->update([
+            'kode_buku' => $request->kode_buku,
+            'nrp_mahasiswa' => $request->nrp_mahasiswa,
+        ]);
+
+        return redirect()->route('peminjaman.index');
     }
 
     /**
@@ -78,8 +112,9 @@ class PeminjamanController extends Controller
      * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Peminjaman $peminjaman)
+    public function destroy($id)
     {
-        //
+        Peminjaman::destroy($id);
+        return redirect()->route('peminjaman.index');
     }
 }

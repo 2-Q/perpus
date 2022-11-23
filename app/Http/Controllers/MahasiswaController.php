@@ -14,7 +14,8 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        return view('mahasiswa.index');
+        $mahasiswas = Mahasiswa::all();
+        return view('mahasiswa.index', compact('mahasiswas'));
     }
 
     /**
@@ -35,7 +36,9 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Mahasiswa::create($request->all());
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil di tambahkan...');
     }
 
     /**
@@ -46,7 +49,9 @@ class MahasiswaController extends Controller
      */
     public function show($id)
     {
-        return view('mahasiswa.detail');
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        return view('mahasiswa.detail', compact('mahasiswa'));
     }
 
     /**
@@ -57,7 +62,9 @@ class MahasiswaController extends Controller
      */
     public function edit($id)
     {
-        return view('mahasiswa.set_data');
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        return view('mahasiswa.set_data', compact('mahasiswa'));
     }
 
     /**
@@ -69,7 +76,11 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        $mahasiswa->update($request->all());
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil di update...');
     }
 
     /**
@@ -80,6 +91,8 @@ class MahasiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Mahasiswa::destroy($id);
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil di hapus...');
     }
 }

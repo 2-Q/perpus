@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('bukus', function (Blueprint $table) {
-            $table->id();
+            $table->id('kode');
+            $table->string('nama');
+            $table->string('category');
+            $table->string('pengarang');
+            $table->string('tahun');
             $table->timestamps();
         });
     }
