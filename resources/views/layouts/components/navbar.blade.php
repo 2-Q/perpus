@@ -51,7 +51,7 @@
         @else
             <li class="nav-item">
                 <span class="nav-link">
-                    <a href="{{ Route('login.index') }}" class="px-3 btn btn-sm btn-primary">Login</a>
+                    <a href="{{ Route('login') }}" class="px-3 btn btn-sm btn-primary">Login</a>
                 </span>
             </li>
         @endauth

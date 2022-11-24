@@ -17,11 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('login', LoginController::class)->only(['index', 'show', 'post', 'update']);
+Route::get("login", [LoginController::class, "index"])->name("login");
+Route::resource('login', LoginController::class)->only(['show', 'store', 'update']);
 Route::post("logout", [LoginController::class, "logout"])->name("logout");
 
-
-Route::get('/', fn () => (redirect()->route('peminjaman.index')))->name('home');
-Route::resource('/peminjaman', PeminjamanController::class);
-Route::resource('/buku', BukuController::class);
-Route::resource('/mahasiswa', MahasiswaController::class);
+Route::middleware(['auth'])->group(function () {    
+    Route::get('/', fn () => (redirect()->route('peminjaman.index')))->name('home');
+    Route::resource('/peminjaman', PeminjamanController::class);
+    Route::resource('/buku', BukuController::class);
+    Route::resource('/mahasiswa', MahasiswaController::class);
+});

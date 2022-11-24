@@ -8,7 +8,7 @@
                 <!-- <img src="/frontend/images/LOGOSTMJ.png" style="margin: 40px 0px; height: 200px"> -->
             </div>
 
-            <form method="POST" class="row justify-content-center">
+            <form method="POST" action="{{ Route('login.store') }}" class="row justify-content-center">
                 @csrf
                 <div class="col-md-8">
                     @error('email')

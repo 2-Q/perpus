@@ -43,12 +43,11 @@ class LoginController extends Controller
         $request->validate([
             "email" => "required|string",
             "password" => "required|string"
-        ], $this->messages);
+        ]);
 
         # get user
         $user = User::where([
-            ['email', $request->email],
-            ['role', 'Client']
+            ['email', $request->email]
         ])->first();
 
         #check user
@@ -150,10 +149,6 @@ class LoginController extends Controller
         Session::flush();
         Auth::logout();
 
-        if ($role == 'Admin') {
-            return redirect()->route('admin.login.index');
-        } else {
-            return redirect()->route('admin.login.show', 'admin');
-        }
+        return redirect()->route('login');
     }
 }
