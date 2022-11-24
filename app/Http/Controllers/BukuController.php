@@ -36,6 +36,14 @@ class BukuController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'kode' => 'required|unique:bukus',
+            'nama' => 'required',
+            'category' => 'required',
+            'pengarang' => 'required',
+            'tahun' => 'required',
+        ]);
+
         Buku::create($request->all());
 
         return redirect()->route('buku.index')->with('success', 'Data berhasil di tambahkan...');
@@ -76,6 +84,13 @@ class BukuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nama' => 'required',
+            'category' => 'required',
+            'pengarang' => 'required',
+            'tahun' => 'required',
+        ]);
+
         $buku = Buku::findOrFail($id);
 
         $buku->update($request->all());

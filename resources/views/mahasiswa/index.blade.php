@@ -28,6 +28,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Mahasiswa</h3>
+                            <div class="d-flex text-nowrap justify-content-end" style="gap: .2rem">
+                                <a href="{{ Route('mahasiswa.create') }}" class="btn btn-sm btn-primary">
+                                    <i class="mr-1 fas fa-plus"></i>
+                                    <span>Tambah Data</span>
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-hover text-nowrap">

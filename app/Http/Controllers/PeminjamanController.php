@@ -46,6 +46,17 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->kode_buku == 'Select Buku') {
+            $request->request->remove('kode_buku');
+        }
+        if ($request->nrp_mahasiswa == 'Select Mahasiswa') {
+            $request->request->remove('nrp_mahasiswa');
+        }
+        $request->validate([
+            'kode_buku' => 'required',
+            'nrp_mahasiswa' => 'required',
+        ]);
+
         Peminjaman::create([
             'no' => time(),
             'kode_buku' => $request->kode_buku,
@@ -97,6 +108,17 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request->kode_buku == 'Select Buku') {
+            $request->request->remove('kode_buku');
+        }
+        if ($request->nrp_mahasiswa == 'Select Mahasiswa') {
+            $request->request->remove('nrp_mahasiswa');
+        }
+        $request->validate([
+            'kode_buku' => 'required',
+            'nrp_mahasiswa' => 'required',
+        ]);
+        
         $peminjaman = Peminjaman::findOrFail($id);
         $peminjaman->update([
             'kode_buku' => $request->kode_buku,

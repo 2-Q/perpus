@@ -36,6 +36,14 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nrp' => 'required|unique:mahasiswas',
+            'nama' => 'required',
+            'prodi' => 'required',
+            'angkatan' => 'required',
+            'kelas' => 'required',
+        ]);
+
         Mahasiswa::create($request->all());
 
         return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil di tambahkan...');
@@ -76,6 +84,13 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nama' => 'required',
+            'prodi' => 'required',
+            'angkatan' => 'required',
+            'kelas' => 'required',
+        ]);
+
         $mahasiswa = Mahasiswa::findOrFail($id);
 
         $mahasiswa->update($request->all());
