@@ -57,13 +57,26 @@ class PeminjamanController extends Controller
             'nrp_mahasiswa' => 'required',
         ]);
 
-        Peminjaman::create([
+//         Peminjaman::create([
+//             'no' => time(),
+//             'kode_buku' => $request->kode_buku,
+//             'nrp_mahasiswa' => $request->nrp_mahasiswa,
+//             'tgl_pinjam' => Carbon::now()->toDateTimeString(),
+//             'tgl_kembali' => Carbon::now()->subDay(-5)->toDateTimeString(),
+//         ]);
+        
+        // INSERT DENGAN PLSQL ORACLE ==============
+        $binding = [
+            'operasi' => 'Insert',
             'no' => time(),
             'kode_buku' => $request->kode_buku,
             'nrp_mahasiswa' => $request->nrp_mahasiswa,
             'tgl_pinjam' => Carbon::now()->toDateTimeString(),
             'tgl_kembali' => Carbon::now()->subDay(-5)->toDateTimeString(),
-        ]);
+        ];
+
+        DB::statement("begin PPINJAM(:operasi,:no,:kode_buku,:nrp_mahasiswa,:tgl_pinjam,:tgl_kembali); end;", $binding);
+        // INSERT DENGAN PLSQL ORACLE ===============
 
         return redirect()->route('peminjaman.index');
     }
@@ -119,11 +132,24 @@ class PeminjamanController extends Controller
             'nrp_mahasiswa' => 'required',
         ]);
         
-        $peminjaman = Peminjaman::findOrFail($id);
-        $peminjaman->update([
+//         $peminjaman = Peminjaman::findOrFail($id);
+//         $peminjaman->update([
+//             'kode_buku' => $request->kode_buku,
+//             'nrp_mahasiswa' => $request->nrp_mahasiswa,
+//         ]);
+
+        // UPDATE DENGAN PLSQL ORACLE ==============
+        $binding = [
+            'operasi' => 'Update',
+            'no' => $id,
             'kode_buku' => $request->kode_buku,
             'nrp_mahasiswa' => $request->nrp_mahasiswa,
-        ]);
+            'tgl_pinjam' => NULL,
+            'tgl_kembali' => NULL,
+        ];
+
+        DB::statement("begin PPINJAM(:operasi,:no,:kode_buku,:nrp_mahasiswa,:tgl_pinjam,:tgl_kembali); end;", $binding);
+        // UPDATE DENGAN PLSQL ORACLE ===============
 
         return redirect()->route('peminjaman.index');
     }
@@ -136,7 +162,21 @@ class PeminjamanController extends Controller
      */
     public function destroy($id)
     {
-        Peminjaman::destroy($id);
+//         Peminjaman::destroy($id);
+        
+        // DELETE DENGAN PLSQL ORACLE ==============
+        $binding = [
+            'operasi' => 'Delete',
+            'no' => $id,
+            'kode_buku' => NULL,
+            'nrp_mahasiswa' => NULL,
+            'tgl_pinjam' => NULL,
+            'tgl_kembali' => NULL,
+        ];
+
+        DB::statement("begin PPINJAM(:operasi,:no,:kode_buku,:nrp_mahasiswa,:tgl_pinjam,:tgl_kembali); end;", $binding);
+        // DELETE DENGAN PLSQL ORACLE ===============
+        
         return redirect()->route('peminjaman.index');
     }
 }
